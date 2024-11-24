@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify, render_template
 from model import query_model
 from flask_cors import CORS
+import argparse
+
 app = Flask(__name__)
 CORS(app)
 
@@ -23,4 +25,9 @@ def handle_query():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=80)
+    # Parse command-line arguments
+    parser = argparse.ArgumentParser(description="Run the Flask app")
+    parser.add_argument("--port", type=int, default=80, help="Port to run the Flask app on")
+    args = parser.parse_args()
+
+    app.run(host="0.0.0.0", port=args.port)
