@@ -29,6 +29,7 @@ vectorstore = load_vectorstore()
 # Load the LLM
 llm = OllamaLLM(
     model="phi3:mini",
+    base_url="http://127.0.0.1:11434",
     callbacks=[StreamingStdOutCallbackHandler()]
 )
 
