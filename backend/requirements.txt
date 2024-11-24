@@ -1,0 +1,9 @@
+flask
+flask-cors
+
+langchain
+langchain_community
+langchain_ollama
+chromadb
+gpt4all
+pypdf

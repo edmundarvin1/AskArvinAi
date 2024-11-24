@@ -1,0 +1,22 @@
+version: '3.8'  # Compose file format version
+
+services:
+  backend:
+    build: ./backend       # Path to the backend's Dockerfile
+    ports:
+      - "5000:5000"        # Map container port 5000 to host port 5000
+    volumes:
+      - ./backend:/app     # Optional: Sync backend code to the container
+    networks:
+      - arvin-network      # Use a custom network for communication
+
+  frontend:
+    build: ./frontend      # Path to the frontend's Dockerfile
+    ports:
+      - "3000:3000"        # Map container port 3000 to host port 3000
+    networks:
+      - arvin-network      # Same network for communication with backend
+
+networks:
+  arvin-network:
+    driver: bridge         # Default network driver
