@@ -2,6 +2,9 @@ from flask import Flask, request, jsonify, render_template
 from model import query_model
 from flask_cors import CORS
 import argparse
+import logging
+
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 CORS(app)
@@ -22,6 +25,7 @@ def handle_query():
         answer = query_model(question)
         return jsonify({"answer": answer})
     except Exception as e:
+        logger.info(f"Error occurred: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":

@@ -7,6 +7,9 @@ from langchain_ollama import OllamaLLM
 from langchain.chains import RetrievalQA
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Load the PDF and split into chunks
 def load_vectorstore():
@@ -29,7 +32,7 @@ vectorstore = load_vectorstore()
 # Load the LLM
 llm = OllamaLLM(
     model="phi3:mini",
-    base_url="http://127.0.0.1:11434",
+   # base_url="http://127.0.0.1:11434",
     callbacks=[StreamingStdOutCallbackHandler()]
 )
 
@@ -54,10 +57,11 @@ qa_chain = RetrievalQA.from_chain_type(
     chain_type_kwargs={"prompt": QA_CHAIN_PROMPT},
 )
 
+
 # Handle queries
 def query_model(query: str):
     result = qa_chain.invoke({"query": query})
-    print(result)
+    logger.info(result)
     return result["result"]
 
 
