@@ -32,7 +32,7 @@ vectorstore = load_vectorstore()
 # Load the LLM
 llm = OllamaLLM(
     model="phi3:mini",
-   # base_url="http://127.0.0.1:11434",
+    base_url="http://127.0.0.1:11434",
     callbacks=[StreamingStdOutCallbackHandler()]
 )
 
@@ -58,11 +58,14 @@ qa_chain = RetrievalQA.from_chain_type(
 )
 
 
-# Handle queries
 def query_model(query: str):
-    result = qa_chain.invoke({"query": query})
-    logger.info(result)
-    return result["result"]
+    try:
+        result = qa_chain.invoke({"query": query})
+        logger.info(f"Result: {result}")
+        return result["result"]
+    except Exception as e:
+        logger.error("Error during model query", exc_info=True)
+        return {"error": str(e)}
 
 
 if __name__ == "__main__":

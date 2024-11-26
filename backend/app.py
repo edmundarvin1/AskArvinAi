@@ -7,6 +7,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
+app.config["DEBUG"] = True
 CORS(app)
 
 @app.route('/')
